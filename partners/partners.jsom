@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Example Partner",
+    "website": "https://example.com",
+    "youtube": "https://youtube.com/@examplechannel",
+    "logo": "https://example.com/logo.png",
+    "description": "A brief description of this partner."
+  },
+  {
+    "name": "Another Partner",
+    "website": "https://anotherpartner.com",
+    "youtube": "https://youtube.com/@anotherpartner",
+    "logo": "https://anotherpartner.com/logo.png",
+    "description": "A brief description of this partner."
+  }
+]
