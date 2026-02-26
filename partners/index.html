@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partners - Part Scavenger</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .partners-header {
+            padding: 60px 30px 40px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .partners-header h1 {
+            color: #27ae60;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .partners-header p {
+            color: #555;
+            font-size: 1.3em;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .partners-section {
+            background: white;
+            padding: 10px 30px 30px;
+        }
+
+        .partner-card {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 28px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .partner-card:last-child {
+            border-bottom: none;
+        }
+
+        .partner-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            object-fit: contain;
+            flex-shrink: 0;
+            background: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .partner-logo-fallback {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background: #e8f8ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: 700;
+            color: #27ae60;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .partner-info {
+            flex: 1;
+        }
+
+        .partner-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .partner-desc {
+            color: #555;
+            font-size: 0.95em;
+            margin-bottom: 12px;
+        }
+
+        .partner-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .partner-links a {
+            color: #2ecc71;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: color 0.2s;
+        }
+
+        .partner-links a:hover {
+            color: #27ae60;
+            text-decoration: underline;
+        }
+
+        .back-link-wrap {
+            padding: 0 30px 24px;
+        }
+
+        .back-link {
+            color: #2ecc71;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #555;
+            padding: 40px 0;
+            font-style: italic;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="partners-header">
+            <h1>Our Partners</h1>
+            <p>People and channels we work with.</p>
+        </div>
+
+        <div class="partners-section" id="partners-list"></div>
+
+        <div class="back-link-wrap">
+            <a href="/" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Part Scavenger. All rights reserved.</p>
+    </footer>
+
+    <script>
+        async function loadPartners() {
+            const list = document.getElementById('partners-list');
+            try {
+                const res = await fetch('./partners.json');
+                if (!res.ok) throw new Error();
+                const partners = await res.json();
+
+                if (partners.length === 0) {
+                    list.innerHTML = '<p class="empty-state">No partners listed yet.</p>';
+                    return;
+                }
+
+                partners.forEach(p => {
+                    const initial = (p.name || '?')[0].toUpperCase();
+
+                    const logoHtml = p.logo
+                        ? `<img class="partner-logo" src="${p.logo}" alt="${p.name} logo" onerror="this.outerHTML='<div class=partner-logo-fallback>${initial}</div>'">`
+                        : `<div class="partner-logo-fallback">${initial}</div>`;
+
+                    const websiteLink = p.website
+                        ? `<a href="${p.website}" target="_blank" rel="noopener">🌐 Website</a>` : '';
+                    const ytLink = p.youtube
+                        ? `<a href="${p.youtube}" target="_blank" rel="noopener">▶ YouTube</a>` : '';
+
+                    const card = document.createElement('div');
+                    card.className = 'partner-card';
+                    card.innerHTML = `
+                        ${logoHtml}
+                        <div class="partner-info">
+                            <div class="partner-name">${p.name || 'Unnamed Partner'}</div>
+                            ${p.description ? `<p class="partner-desc">${p.description}</p>` : ''}
+                            <div class="partner-links">${websiteLink}${ytLink}</div>
+                        </div>
+                    `;
+                    list.appendChild(card);
+                });
+            } catch {
+                list.innerHTML = '<p class="empty-state">Could not load partners data.</p>';
+            }
+        }
+
+        loadPartners();
+    </script>
+</body>
+</html>
