@@ -184,7 +184,7 @@
         async function loadPartners() {
             const list = document.getElementById('partners-list');
             try {
-                const res = await fetch('./partners.json');
+                const res = await fetch('./partners.json' + Date.now());
                 if (!res.ok) throw new Error();
                 const partners = await res.json();
 
