@@ -3,7 +3,7 @@
     "name": "Be Our Partner!",
     "website": "https://partscavenger.com",
     "youtube": "https://youtube.com/",
-    "logo": "../assets/part-scavenger-icon.png",
+    "logo": "/assets/part-scavenger-icon.png",
     "description": "Contact us today!"
   }
 ]
