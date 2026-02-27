@@ -122,6 +122,26 @@
             font-size: 0.9em;
             margin-top: 20px;
         }
+        .partners-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            padding: 0 24px;
+            background: #27ae60;
+            color: white !important;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .partners-btn:hover {
+            background: #219150;
+            text-decoration: none !important;
+        }
+        
     </style>
 </head>
 <body>
@@ -139,16 +159,10 @@
                 <a href="https://play.google.com/store/apps/details?id=gossling.solutions.part_scavenger&hl=en_US" class="store-badge" aria-label="Get it on Google Play">
                     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
                 </a>
-                <a href="/partners">
-                    <button>Click Me</button>
+                <a href="/partners" class="store-badge partners-btn" aria-label="Meet Our Partners">
+                    Our Partners
                 </a>
             </div>
-        </div>
-
-        <div class="container">
-            <a href="/partners">
-                    <button>Click Me</button>
-                </a>
         </div>
         
         <div class="support-section">
